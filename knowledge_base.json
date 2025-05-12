@@ -1,0 +1,15 @@
+{
+  "corva": {
+    "acceso": { "contacto": "Sebastián - sebastian@corva.com" },
+    "visualizacion": { "contacto": "Sebastián - sebastian@corva.com" },
+    "conexion": { "contacto": "Sebastián - sebastian@corva.com" }
+  },
+  "wellexpert": {
+    "error": { "contacto": "José Quintana - jose@tecpetrol.com" },
+    "visualizacion": { "contacto": "José Quintana - jose@tecpetrol.com" }
+  },
+  "rigcloud": {
+    "conexion": { "contacto": "Robin - robin@rigcloud.com" },
+    "rendimiento": { "contacto": "Robin - robin@rigcloud.com" }
+  }
+}

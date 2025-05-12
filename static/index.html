@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat Soporte Operativo</title>
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary: #4f46e5;
+        --secondary: #e0e7ff;
+        --bg: #f9fafb;
+        --light-bg: #ffffff;
+        --border: #e5e7eb;
+        --text-default: #1f2937;
+        --text-muted: #6b7280;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: var(--bg);
+        color: var(--text-default);
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        overflow: hidden;
+      }
+      header {
+        background-color: var(--primary);
+        color: #fff;
+        padding: 1rem;
+        text-align: center;
+        font-weight: 600;
+        font-size: 1.25rem;
+      }
+      #chat-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        overflow-y: auto;
+        gap: 0.5rem;
+      }
+      .message {
+        max-width: 75%;
+        padding: 0.75rem 1rem;
+        border-radius: 1rem;
+        line-height: 1.4;
+        position: relative;
+        word-wrap: break-word;
+      }
+      .user {
+        align-self: flex-end;
+        background-color: var(--primary);
+        color: #fff;
+        border-bottom-right-radius: 0;
+      }
+      .bot {
+        align-self: flex-start;
+        background-color: var(--light-bg);
+        color: var(--text-default);
+        border-bottom-left-radius: 0;
+        border: 1px solid var(--border);
+      }
+      footer {
+        padding: 0.75rem;
+        border-top: 1px solid var(--border);
+        background-color: var(--light-bg);
+        display: flex;
+        gap: 0.5rem;
+      }
+      #message {
+        flex: 1;
+        padding: 0.75rem;
+        border: 1px solid var(--border);
+        border-radius: 9999px;
+        font-size: 1rem;
+      }
+      #sendBtn {
+        background-color: var(--primary);
+        color: #fff;
+        border: none;
+        padding: 0 1rem;
+        border-radius: 9999px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      #sendBtn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    </style>
+  </head>
+  <body>
+    <header>Chat Soporte Operativo</header>
+    <div id="chat-container"></div>
+    <footer>
+      <input
+        type="text"
+        id="message"
+        placeholder="Escribí tu mensaje..."
+        autocomplete="off"
+      />
+      <button id="sendBtn">Enviar</button>
+    </footer>
+
+    <script>
+      const chatContainer = document.getElementById("chat-container");
+      const messageInput = document.getElementById("message");
+      const sendBtn = document.getElementById("sendBtn");
+
+      function appendMessage(who, text) {
+        const div = document.createElement("div");
+        div.classList.add("message", who);
+        div.textContent = text;
+        chatContainer.appendChild(div);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+      }
+
+      async function sendMessage() {
+        const msg = messageInput.value.trim();
+        if (!msg) return;
+        appendMessage("user", msg);
+        messageInput.value = "";
+        sendBtn.disabled = true;
+
+        const response = await fetch("/chat/stream", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ mensaje: msg }),
+        });
+
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let botMsg = "";
+        appendMessage("bot", "");
+        const lastMsg = chatContainer.lastChild;
+
+        while (true) {
+          const { value, done } = await reader.read();
+          if (done) break;
+          botMsg += decoder.decode(value);
+          lastMsg.textContent = botMsg;
+          chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+        sendBtn.disabled = false;
+        messageInput.focus();
+      }
+
+      sendBtn.addEventListener("click", sendMessage);
+      messageInput.addEventListener("keyup", (e) => {
+        if (e.key === "Enter") sendMessage();
+      });
+    </script>
+  </body>
+</html>
