@@ -1,15 +1,18 @@
 {
-  "corva": {
-    "acceso": { "contacto": "Sebastián - sebastian@corva.com" },
-    "visualizacion": { "contacto": "Sebastián - sebastian@corva.com" },
-    "conexion": { "contacto": "Sebastián - sebastian@corva.com" }
+  "applix": {
+    "login": { "contacto": "Alice - alice@fakesupport.com" },
+    "display": { "contacto": "Alice - alice@fakesupport.com" },
+    "sync": { "contacto": "Alice - alice@fakesupport.com" }
   },
-  "wellexpert": {
-    "error": { "contacto": "José Quintana - jose@tecpetrol.com" },
-    "visualizacion": { "contacto": "José Quintana - jose@tecpetrol.com" }
+  "dataflow": {
+    "error": { "contacto": "Bob - bob@fakesupport.com" },
+    "visual": { "contacto": "Bob - bob@fakesupport.com" }
   },
-  "rigcloud": {
-    "conexion": { "contacto": "Robin - robin@rigcloud.com" },
-    "rendimiento": { "contacto": "Robin - robin@rigcloud.com" }
+  "welltrack": {
+    "connection": { "contacto": "Carol - carol@fakesupport.com" },
+    "performance": { "contacto": "Carol - carol@fakesupport.com" }
+  },
+  "general": {
+    "common_issue": { "contacto": "Support Team - support@fakesupport.com" }
   }
 }
