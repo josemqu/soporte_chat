@@ -31,7 +31,7 @@ chat-app/
 1. **Clonar el repositorio**
 
    ```bash
-   git clone https://github.com/tu-usuario/chat-app.git
+   git clone https://github.com/josemqu/soporte_chat.git
    cd chat-app
    ```
 
