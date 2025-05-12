@@ -32,7 +32,7 @@ chat-app/
 
    ```bash
    git clone https://github.com/josemqu/soporte_chat.git
-   cd chat-app
+   cd soporte_chat
    ```
 
 2. **Crear y activar un entorno virtual** (recomendado)
